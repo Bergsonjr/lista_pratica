@@ -8,77 +8,82 @@ namespace grafos
 {
     class Grafos
     {
-        private bool isAdjacente(Vertice v1, Vertice v2)
+        public Grafos()
         {
-            return false;
+
         }
-        private int getGrau(Vertice v1)
+        public bool isAdjacente(Vertice v1, Vertice v2)
+        {
+            if (v1.Adjacente == v2.Id || v2.Adjacente == v1.Id) return true;
+            else return false;
+        }
+        public int getGrau(Vertice v1)
         {
             return 0;
         }
-        private bool isIsolado(Vertice v1)
+        public bool isIsolado(Vertice v1)
         {
             //if(v1.Proximos)
             return false;
         }
-        private bool isPendente(Vertice v1)
+        public bool isPendente(Vertice v1)
         {
             return false;
         }
-        private bool isRegular()
+        public bool isRegular()
         {
             return false;
         }
-        private bool isNulo()
+        public bool isNulo()
         {
             return true;
         }
-        private bool isCompleto()
+        public bool isCompleto()
         {
             return true;
         }
-        private bool isConexo()
+        public bool isConexo()
         {
             return false;
         }
-        private bool isEuleriano()
+        public bool isEuleriano()
         {
             return true;
         }
-        private bool isUnicursal()
+        public bool isUnicursal()
         {
             return false;
         }
-        private Grafos getComplementar()
+        public Grafos getComplementar()
         {
             return null;
         }
-        private Grafos getAGMPrim(Vertice v1)
+        public Grafos getAGMPrim(Vertice v1)
         {
             //deve retornar, para um grafo conexo, sua arvore geradora minima(Algoritmo de Prim)
             return null;
         }
-        private Grafos getAGMKruskal(Vertice v1)
+        public Grafos getAGMKruskal(Vertice v1)
         {
             //deve retornar, para um grafo conexo, sua arvore geradora minima(Algoritmo de Kruskal)
             return null;
         }
 
-        private int getCutVertices()
+        public int getCutVertices()
         {
             return 0;
         }
 
         //para grafos dirigidos
-        private int getGrauEntrada()
+        public int getGrauEntrada()
         {
             return 0;
         }
-        private int getGrauSaida()
+        public int getGrauSaida()
         {
             return 0;
         }
-        private bool hasCiclo()
+        public bool hasCiclo()
         {
             return true;
         }

@@ -8,5 +8,24 @@ namespace grafos
 {
     class Vertice
     {
+        private int id;
+
+        public int Id
+        {
+            get
+            {
+                return id;
+            }
+
+            set
+            {
+                id = value;
+            }
+        }
+
+        public Vertice(int id)
+        {
+            this.Id = id;
+        }
     }
 }
