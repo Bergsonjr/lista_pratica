@@ -12,10 +12,20 @@ namespace grafos
         {
 
         }
-        public bool isAdjacente(Vertice v1, Vertice v2)
+        public bool isAdjacente(Vertice v1, Vertice v2, List<Aresta>array)
         {
-            if (v1.Adjacente == v2.Id || v2.Adjacente == v1.Id) return true;
-            else return false;
+            foreach (Aresta item in array)
+            {
+                if (item.Origem.Id == v1.Id || item.Origem.Id == v2.Id)
+                {
+                    if (item.Destino.Id == v2.Id || item.Destino.Id == v1.Id)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+           return false;
         }
         public int getGrau(Vertice v1)
         {

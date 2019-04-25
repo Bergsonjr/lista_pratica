@@ -10,20 +10,46 @@ namespace grafos
 {
     class Program
     {
-        static Aresta[] arrayA;
+        static List<Aresta> arrayA = new List<Aresta>();
         static Vertice[] arrayV;
+        static Grafos dirigido = new Grafos();
+        //files
+        const string pathNaoDirigido = "grafo_nao_dirigido.txt";
+        const string pathDirigido = "grafo dirigido.txt";
         static void Main(string[] args)
         {
-            string pathNaoDirigido = "grafo_nao_dirigido.txt";
-            string pathDirigido = "grafo dirigido.txt";
-            readFileGrafo(pathNaoDirigido);
-            Grafos dirigido = new Grafos();
-
-            isAdjacente();
-            //readFileDigrafo(pathDirigido);
+            Menu();
             Console.ReadKey();
         }
 
+        public static void Menu()
+        {
+            Console.Write("1. para grafo não dirigido");
+            Console.Write("2. para grafo dirigido");
+            int option = int.Parse(Console.ReadLine());
+            switch (option)
+            {
+                case 1:
+                    callMethodDirigido();
+                    break;
+                case 2:
+                    callMethodNotDirigido();
+                    break;
+                default:
+                    Console.Clear();
+                    Console.Write("Essa opção não existe!");
+                    break;
+            }
+        }
+        public static void callMethodDirigido()
+        {
+            readFileGrafo(pathNaoDirigido);
+            isAdjacente();
+        }
+        public static void callMethodNotDirigido()
+        {
+            //readFileDigrafo(pathDirigido);
+        }
         public static void isAdjacente()
         {
             try
@@ -33,7 +59,7 @@ namespace grafos
                 Console.Write("Digite o segundo vértice: ");
                 int v2 = int.Parse(Console.ReadLine());
 
-
+                Console.WriteLine(dirigido.isAdjacente(new Vertice(v1), new Vertice(v2), arrayA));
             }
             catch (Exception e)
             {
@@ -62,7 +88,7 @@ namespace grafos
                     Vertice v1 = new Vertice(int.Parse(separador[0]));
                     Vertice v2 = new Vertice(int.Parse(separador[1]));
 
-                    arrayA[count] = new Aresta(v1, v2, int.Parse(separador[2]));
+                    arrayA.Add(new Aresta(v1, v2, int.Parse(separador[2])));
                     count++;
                 }
                 linha = arq.ReadLine();

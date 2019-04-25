@@ -11,6 +11,46 @@ namespace grafos
         Vertice origem;
         Vertice destino;
         int peso;
+
+        internal Vertice Origem
+        {
+            get
+            {
+                return origem;
+            }
+
+            set
+            {
+                origem = value;
+            }
+        }
+
+        internal Vertice Destino
+        {
+            get
+            {
+                return destino;
+            }
+
+            set
+            {
+                destino = value;
+            }
+        }
+
+        public int Peso
+        {
+            get
+            {
+                return peso;
+            }
+
+            set
+            {
+                peso = value;
+            }
+        }
+
         public Aresta(Vertice o, Vertice d, int p)
         {
             this.origem = o;
