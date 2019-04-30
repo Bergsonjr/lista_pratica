@@ -8,71 +8,71 @@ namespace grafos
 {
     class Grafos
     {
-        public Grafos()
-        {
+        public Grafos() {}
 
-        }
-        public bool isAdjacente(Vertice v1, Vertice v2, List<Aresta>array)
+        public bool isAdjacente(Vertice v1, Vertice v2)
         {
-            foreach (Aresta item in array)
-            {
-                if (item.Origem.Id == v1.Id || item.Origem.Id == v2.Id)
-                {
-                    if (item.Destino.Id == v2.Id || item.Destino.Id == v1.Id)
-                    {
-                        return true;
-                    }
-                }
-            }
-
+            if (v1.Adjacente.IndexOf(v2) == 0 || v2.Adjacente.IndexOf(v1) == 0) return true;
            return false;
         }
+
         public int getGrau(Vertice v1)
         {
-            return 0;
+            return v1.Adjacente.Count;
         }
+
         public bool isIsolado(Vertice v1)
         {
-            //if(v1.Proximos)
-            return false;
+            if (getGrau(v1) > 0) return false;
+            else return true;   
         }
+
         public bool isPendente(Vertice v1)
         {
             return false;
         }
+
         public bool isRegular()
         {
             return false;
         }
+
         public bool isNulo()
         {
             return true;
         }
+
         public bool isCompleto()
         {
             return true;
         }
+
         public bool isConexo()
         {
             return false;
         }
+
         public bool isEuleriano()
         {
             return true;
         }
+
         public bool isUnicursal()
         {
             return false;
         }
+
         public Grafos getComplementar()
         {
             return null;
         }
+
         public Grafos getAGMPrim(Vertice v1)
         {
             //deve retornar, para um grafo conexo, sua arvore geradora minima(Algoritmo de Prim)
             return null;
         }
+
         public Grafos getAGMKruskal(Vertice v1)
         {
             //deve retornar, para um grafo conexo, sua arvore geradora minima(Algoritmo de Kruskal)
@@ -89,10 +89,12 @@ namespace grafos
         {
             return 0;
         }
+
         public int getGrauSaida()
         {
             return 0;
         }
+
         public bool hasCiclo()
         {
             return true;

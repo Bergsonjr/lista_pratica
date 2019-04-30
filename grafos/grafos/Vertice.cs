@@ -8,24 +8,17 @@ namespace grafos
 {
     class Vertice
     {
-        private int id;
+        int id;
+        List<Vertice> adjacente;
 
-        public int Id
-        {
-            get
-            {
-                return id;
-            }
+        public int Id{get{return id;}set {id = value;}}
+        public List<Vertice> Adjacente { get => adjacente; set => adjacente = value; }
 
-            set
-            {
-                id = value;
-            }
-        }
-
-        public Vertice(int id)
+        public Vertice(int id) { this.id = id; }
+        public Vertice(int id, List<Vertice> adjc)
         {
             this.Id = id;
+            this.Adjacente = adjc;
         }
     }
 }

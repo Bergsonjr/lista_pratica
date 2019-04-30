@@ -16,6 +16,7 @@ namespace grafos
         //files
         const string pathNaoDirigido = "grafo_nao_dirigido.txt";
         const string pathDirigido = "grafo dirigido.txt";
+
         static void Main(string[] args)
         {
             Menu();
@@ -24,8 +25,8 @@ namespace grafos
 
         public static void Menu()
         {
-            Console.Write("1. para grafo não dirigido");
-            Console.Write("2. para grafo dirigido");
+            Console.WriteLine("1. para grafo não dirigido");
+            Console.WriteLine("2. para grafo dirigido");
             int option = int.Parse(Console.ReadLine());
             switch (option)
             {
@@ -41,17 +42,37 @@ namespace grafos
                     break;
             }
         }
+
         public static void callMethodDirigido()
         {
-            readFileGrafo(pathNaoDirigido);
-            isAdjacente();
+            try
+            {
+                readFileGrafo(pathNaoDirigido);
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();
+                isAdjacente();
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();
+                getGrau();
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }        
         }
+
         public static void callMethodNotDirigido()
         {
             //readFileDigrafo(pathDirigido);
         }
+
+        //1 - A
         public static void isAdjacente()
         {
+            Console.Clear();
+            Console.WriteLine("*----- Adjacência entre vétices -----*");
             try
             {
                 Console.Write("Digite o primeiro vértice: ");
@@ -59,12 +80,46 @@ namespace grafos
                 Console.Write("Digite o segundo vértice: ");
                 int v2 = int.Parse(Console.ReadLine());
 
-                Console.WriteLine(dirigido.isAdjacente(new Vertice(v1), new Vertice(v2), arrayA));
+                Console.WriteLine(dirigido.isAdjacente(new Vertice(v1), new Vertice(v2));
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                throw e;
             } 
+        }
+        //1 - B
+        public static void getGrau()
+        {
+            Console.Clear();
+            Console.WriteLine("*----- Grau do vértice -----*");
+            try
+            {
+                Console.Write("Digite o vértice: ");
+                int v1 = int.Parse(Console.ReadLine());
+
+                Console.WriteLine(dirigido.getGrau(new Vertice(v1), arrayA));
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        //1 - C
+        public static void isIsolado()
+        {
+            Console.Clear();
+            Console.WriteLine("*----- Vértice isolado -----*");
+            try
+            {
+                Console.Write("Digite o vértice: ");
+                int v1 = int.Parse(Console.ReadLine());
+
+                Console.WriteLine(dirigido.isIsolado(new Vertice(v1), arrayA));
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
         public static void readFileGrafo(string path)
         {
@@ -85,21 +140,36 @@ namespace grafos
                 }
                 else
                 {
-                    Vertice v1 = new Vertice(int.Parse(separador[0]));
-                    Vertice v2 = new Vertice(int.Parse(separador[1]));
-
-                    arrayA.Add(new Aresta(v1, v2, int.Parse(separador[2])));
+                    if (verifyArray(new Vertice(int.Parse(separador[0]))) == -1) 
+                    {
+                        arrayV[count] = new Vertice(int.Parse(separador[0]));
+                        arrayV[count].Adjacente.Add(new Vertice(int.Parse(separador[1])));
+                    }
+                    else
+                    {
+                        arrayV[int.Parse(separador[0])].Adjacente.Add(new Vertice(int.Parse(separador[1])));
+                    }
                     count++;
                 }
                 linha = arq.ReadLine();
             }
         }
+
         public static void inputDataOfArray()
         {
             for (int i = 0; i < arrayV.Length; i++)
             {
                 arrayV[i] = new Vertice(i);
             }
+        }
+
+        public static int verifyArray(Vertice v)
+        {
+            for (int i = 0; i < arrayV.Length; i++)
+            {
+                if (v.Id == arrayV[i].Id){return v.Id;}
+            }
+            return -1;
         }
     }
 }
