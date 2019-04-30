@@ -11,7 +11,7 @@ namespace grafos
     class Program
     {
         static List<Aresta> arrayA = new List<Aresta>();
-        static Vertice[] arrayV;
+        public static Vertice[] arrayV;
         static Grafos dirigido = new Grafos();
         //files
         const string pathNaoDirigido = "grafo_nao_dirigido.txt";
@@ -56,6 +56,9 @@ namespace grafos
                 getGrau();
                 Console.WriteLine("Pressione ENTER para continuar");
                 Console.ReadKey();
+                isIsolado();
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();
             }
             catch (Exception e)
             {
@@ -80,13 +83,14 @@ namespace grafos
                 Console.Write("Digite o segundo vértice: ");
                 int v2 = int.Parse(Console.ReadLine());
 
-                Console.WriteLine(dirigido.isAdjacente(new Vertice(v1), new Vertice(v2));
+                Console.WriteLine(dirigido.isAdjacente(findVertice(v1), findVertice(v2)));
             }
             catch (Exception e)
             {
                 throw e;
             } 
         }
+
         //1 - B
         public static void getGrau()
         {
@@ -97,13 +101,14 @@ namespace grafos
                 Console.Write("Digite o vértice: ");
                 int v1 = int.Parse(Console.ReadLine());
 
-                Console.WriteLine(dirigido.getGrau(new Vertice(v1), arrayA));
+                Console.WriteLine(dirigido.getGrau(findVertice(v1)));
             }
             catch (Exception e)
             {
                 throw e;
             }
         }
+
         //1 - C
         public static void isIsolado()
         {
@@ -114,7 +119,7 @@ namespace grafos
                 Console.Write("Digite o vértice: ");
                 int v1 = int.Parse(Console.ReadLine());
 
-                Console.WriteLine(dirigido.isIsolado(new Vertice(v1), arrayA));
+                Console.WriteLine(dirigido.isIsolado(findVertice(v1)));
             }
             catch (Exception e)
             {
@@ -135,21 +140,21 @@ namespace grafos
                 if (!read)
                 {
                    arrayV = new Vertice[int.Parse(separador[0])];
-                   inputDataOfArray();
                    read = true;
                 }
                 else
                 {
-                    if (verifyArray(new Vertice(int.Parse(separador[0]))) == -1) 
+                    int pos = verifyArray(new Vertice(int.Parse(separador[0])));
+                    if (pos == -1) 
                     {
                         arrayV[count] = new Vertice(int.Parse(separador[0]));
                         arrayV[count].Adjacente.Add(new Vertice(int.Parse(separador[1])));
+                        count++;
                     }
                     else
-                    {
-                        arrayV[int.Parse(separador[0])].Adjacente.Add(new Vertice(int.Parse(separador[1])));
-                    }
-                    count++;
+                    { 
+                        arrayV[pos].Adjacente.Add(new Vertice(int.Parse(separador[1])));
+                    } 
                 }
                 linha = arq.ReadLine();
             }
@@ -165,11 +170,35 @@ namespace grafos
 
         public static int verifyArray(Vertice v)
         {
-            for (int i = 0; i < arrayV.Length; i++)
+            int count = 0;
+            foreach (var vertice in arrayV)
             {
-                if (v.Id == arrayV[i].Id){return v.Id;}
+                if (vertice != null) { 
+                    if (v.Id == vertice.Id) { return count; }
+                }
+                count++;
             }
             return -1;
+        }
+
+        public static Vertice findVertice(int id)
+        {
+            for (int i = 0; i < arrayV.Length; i++)
+            {
+                if (arrayV[i] != null)
+                {
+                    if (arrayV[i].Id == id) return arrayV[i];
+                }
+            }
+
+            for (int i = 0; i < arrayV.Length; i++)
+            {
+                foreach (var item in arrayV[i].Adjacente)
+                {
+                    if (item.Id == id) return item;
+                }
+            }
+            return null;
         }
     }
 }
