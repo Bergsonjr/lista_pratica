@@ -80,7 +80,7 @@ namespace grafos
                 Console.Write("Digite o segundo vértice: ");
                 int v2 = int.Parse(Console.ReadLine());
 
-                Console.WriteLine(dirigido.isAdjacente(new Vertice(v1), new Vertice(v2));
+                Console.WriteLine(dirigido.isAdjacente(new Vertice(v1), new Vertice(v2)));
             }
             catch (Exception e)
             {
@@ -97,7 +97,7 @@ namespace grafos
                 Console.Write("Digite o vértice: ");
                 int v1 = int.Parse(Console.ReadLine());
 
-                Console.WriteLine(dirigido.getGrau(new Vertice(v1), arrayA));
+                Console.WriteLine(dirigido.getGrau(new Vertice(v1)));
             }
             catch (Exception e)
             {
@@ -114,7 +114,7 @@ namespace grafos
                 Console.Write("Digite o vértice: ");
                 int v1 = int.Parse(Console.ReadLine());
 
-                Console.WriteLine(dirigido.isIsolado(new Vertice(v1), arrayA));
+                Console.WriteLine(dirigido.isIsolado(new Vertice(v1)));
             }
             catch (Exception e)
             {
