@@ -66,6 +66,9 @@ namespace grafos
                 isRegular();
                 Console.WriteLine("Pressione ENTER para continuar");
                 Console.ReadKey();
+                isNulo();
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();
             }
             catch (Exception e)
             {
@@ -82,7 +85,7 @@ namespace grafos
         public static void isAdjacente()
         {
             Console.Clear();
-            Console.WriteLine("*----- Adjacência entre vétices -----*");
+            Console.WriteLine("*----- Adjacência entre vértices -----*");
             try
             {
                 Console.Write("Digite o primeiro vértice: ");
@@ -165,6 +168,20 @@ namespace grafos
             }
         }
         //1 F
+        public static void isNulo()
+        {
+            Console.Clear();
+            Console.WriteLine("*----- Grafo nulo -----*");
+            try
+            {
+                Console.WriteLine(dirigido.isNulo());
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        //1 G
         public static void isCompleto()
         {
             Console.Clear();
@@ -178,7 +195,7 @@ namespace grafos
                 throw e;
             }
         }
-        //1 G
+        //1 H
         public static void isConexo()
         {
             Console.Clear();
@@ -192,7 +209,7 @@ namespace grafos
                 throw e;
             }
         }
-        //1 H
+        //1 I
         public static void isEuleriano()
         {
             Console.Clear();
@@ -206,7 +223,7 @@ namespace grafos
                 throw e;
             }
         }
-        //1 I
+        //1 J
         public static void isUnicursal()
         {
             Console.Clear();
@@ -220,7 +237,7 @@ namespace grafos
                 throw e;
             }
         }
-        //1 J
+        //1 K
         public static void getComplementar()
         {
             Console.Clear();
@@ -234,7 +251,7 @@ namespace grafos
                 throw e;
             }
         }
-        //1 K
+        //1 L
         public static void getAGMPrim()
         {
             Console.Clear();
@@ -251,7 +268,7 @@ namespace grafos
                 throw e;
             }
         }
-        //1 L
+        //1 M
         public static void getAGMKruskal()
         {
             Console.Clear();
@@ -268,7 +285,7 @@ namespace grafos
                 throw e;
             }
         }
-        //1 M
+        //1 N
         public static void getCutVertices()
         {
             Console.Clear();

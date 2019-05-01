@@ -73,6 +73,10 @@ namespace grafos
 
         public bool isNulo()
         {
+            for (int i = 0; i < Program.arrayV.Length; i++)
+            {
+                if(Program.arrayV[i] != null && Program.arrayV[i].Adjacente != null) if (Program.arrayV[i].Adjacente.Count > 0) return false;
+            }
             return true;
         }
 
