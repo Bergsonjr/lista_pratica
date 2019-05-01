@@ -12,13 +12,26 @@ namespace grafos
 
         public bool isAdjacente(Vertice v1, Vertice v2)
         {
-            if (v1.Adjacente.IndexOf(v2) == 0 || v2.Adjacente.IndexOf(v1) == 0) return true;
+            if (v1.Adjacente.Exists(x => x.Id == v2.Id) || v2.Adjacente.Exists(x => x.Id == v1.Id)) return true;
            return false;
         }
 
         public int getGrau(Vertice v1)
         {
-            return v1.Adjacente.Count;
+            int grau = 0;
+            if (v1.Adjacente.Count == 0)
+            {
+                for (int i = 0; i < Program.arrayV.Length; i++)
+                {
+                    if(Program.arrayV[i].Adjacente != null) { 
+                        foreach (var item in Program.arrayV[i].Adjacente)
+                        {
+                            if (item.Id == v1.Id) grau++;
+                        }
+                    }
+                }
+            }
+            return grau;
         }
 
         public bool isIsolado(Vertice v1)
