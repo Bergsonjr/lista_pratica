@@ -13,6 +13,7 @@ namespace grafos
         static List<Aresta> arrayA = new List<Aresta>();
         public static Vertice[] arrayV;
         static Grafos dirigido = new Grafos();
+        static Grafos naoDirigido = new Grafos();
         //files
         const string pathNaoDirigido = "grafo_nao_dirigido.txt";
         const string pathDirigido = "grafo dirigido.txt";
@@ -59,6 +60,12 @@ namespace grafos
                 isIsolado();
                 Console.WriteLine("Pressione ENTER para continuar");
                 Console.ReadKey();
+                isPendente();
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();
+                isRegular();
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();
             }
             catch (Exception e)
             {
@@ -101,7 +108,7 @@ namespace grafos
                 Console.Write("Digite o vértice: ");
                 int v1 = int.Parse(Console.ReadLine());
 
-                Console.WriteLine(dirigido.getGrau(new Vertice(v1), arrayA));
+                Console.WriteLine(dirigido.getGrau(findVertice(v1)));
             }
             catch (Exception e)
             {
@@ -119,7 +126,204 @@ namespace grafos
                 Console.Write("Digite o vértice: ");
                 int v1 = int.Parse(Console.ReadLine());
 
-                Console.WriteLine(dirigido.isIsolado(new Vertice(v1), arrayA));
+                Console.WriteLine(dirigido.isIsolado(findVertice(v1)));
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        //1 D
+        public static void isPendente()
+        {
+            Console.Clear();
+            Console.WriteLine("*----- Vértice pendente -----*");
+            try
+            {
+                Console.Write("Digite o vértice: ");
+                int v1 = int.Parse(Console.ReadLine());
+
+                Console.WriteLine(dirigido.isPendente(findVertice(v1)));
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        //1 E
+        public static void isRegular()
+        {
+            Console.Clear();
+            Console.WriteLine("*----- Grafo regular -----*");
+            try
+            {
+                Console.WriteLine(dirigido.isRegular());
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        //1 F
+        public static void isCompleto()
+        {
+            Console.Clear();
+            Console.WriteLine("*----- Grafo completo -----*");
+            try
+            {
+                Console.WriteLine(dirigido.isCompleto());
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        //1 G
+        public static void isConexo()
+        {
+            Console.Clear();
+            Console.WriteLine("*----- Grafo conexo -----*");
+            try
+            {
+                Console.WriteLine(dirigido.isConexo());
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        //1 H
+        public static void isEuleriano()
+        {
+            Console.Clear();
+            Console.WriteLine("*----- Grafo euleriano -----*");
+            try
+            {
+                Console.WriteLine(dirigido.isEuleriano());
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        //1 I
+        public static void isUnicursal()
+        {
+            Console.Clear();
+            Console.WriteLine("*----- Grafo unicursal -----*");
+            try
+            {
+                Console.WriteLine(dirigido.isUnicursal());
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        //1 J
+        public static void getComplementar()
+        {
+            Console.Clear();
+            Console.WriteLine("*----- Grafo complementar -----*");
+            try
+            {
+                Console.WriteLine(dirigido.getComplementar());
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        //1 K
+        public static void getAGMPrim()
+        {
+            Console.Clear();
+            Console.WriteLine("*----- Árvore geradora minima (Prim) -----*");
+            try
+            {
+                Console.WriteLine("Digite o vértice inicial: ");
+                int v1 = int.Parse(Console.ReadLine());
+
+                Console.WriteLine(dirigido.getAGMPrim(findVertice(v1)));
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        //1 L
+        public static void getAGMKruskal()
+        {
+            Console.Clear();
+            Console.WriteLine("*----- Árvore geradora minima (Kruskal) -----*");
+            try
+            {
+                Console.WriteLine("Digite o vértice inicial: ");
+                int v1 = int.Parse(Console.ReadLine());
+
+                Console.WriteLine(dirigido.getAGMKruskal(findVertice(v1)));
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        //1 M
+        public static void getCutVertices()
+        {
+            Console.Clear();
+            Console.WriteLine("*----- Cut vértices -----*");
+            try
+            {
+                Console.WriteLine(dirigido.getCutVertices());
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        //2 A
+        public static void getGrauEntrada()
+        {
+            Console.Clear();
+            Console.WriteLine("*----- Grau de entrada -----*");
+            try
+            {
+                Console.WriteLine("Digite o vértice: ");
+                int v1 = int.Parse(Console.ReadLine());
+
+                Console.WriteLine(naoDirigido.getGrauEntrada(findVertice(v1)));
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        //2 B
+        public static void getGrauSaida()
+        {
+            Console.Clear();
+            Console.WriteLine("*----- Grau de saída -----*");
+            try
+            {
+                Console.WriteLine("Digite o vértice: ");
+                int v1 = int.Parse(Console.ReadLine());
+
+                Console.WriteLine(naoDirigido.getGrauSaida(findVertice(v1)));
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        //2 C
+        public static void hasCiclo()
+        {
+            Console.Clear();
+            Console.WriteLine("*----- Possui ciclo -----*");
+            try
+            {
+                Console.WriteLine(naoDirigido.hasCiclo());
             }
             catch (Exception e)
             {

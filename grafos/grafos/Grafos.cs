@@ -12,42 +12,63 @@ namespace grafos
 
         public bool isAdjacente(Vertice v1, Vertice v2)
         {
-            if (v1.Adjacente.Exists(x => x.Id == v2.Id) || v2.Adjacente.Exists(x => x.Id == v1.Id)) return true;
-           return false;
+            //verifica se existe v2 na lista de adjacencia de v1 e vice e versa.
+            return v1.Adjacente.Exists(x => x.Id == v2.Id) || v2.Adjacente.Exists(x => x.Id == v1.Id) ? true : false;
         }
 
         public int getGrau(Vertice v1)
-        {
+        { 
+            //verifica se é um vertice isolado, se não for percorre contabilizando sua adjacencia com outros vértices do grafo.
             int grau = 0;
             if (v1.Adjacente.Count == 0)
             {
                 for (int i = 0; i < Program.arrayV.Length; i++)
                 {
-                    if(Program.arrayV[i].Adjacente != null) { 
+                    if(Program.arrayV[i] != null && Program.arrayV[i].Adjacente != null) { 
                         foreach (var item in Program.arrayV[i].Adjacente)
                         {
                             if (item.Id == v1.Id) grau++;
                         }
                     }
                 }
+                return grau;
             }
-            return grau;
+            else
+            {
+                return v1.Adjacente.Count;
+            }
         }
 
         public bool isIsolado(Vertice v1)
         {
-            if (getGrau(v1) > 0) return false;
-            else return true;   
+            //verifica o grau do vertice e retorna
+            return getGrau(v1) > 0 ? false : true;
         }
 
         public bool isPendente(Vertice v1)
         {
-            return false;
+            //verica a quantidade de adjacentes daquele vertice e o grau do mesmo(vertice folha)
+            return v1.Adjacente.Count == 0 && getGrau(v1) > 0 ? true : false;
         }
 
         public bool isRegular()
         {
-            return false;
+            for (int i = 0; i < Program.arrayV.Length; i++)
+            {
+                if(Program.arrayV[i] != null && Program.arrayV[i].Adjacente != null)
+                {
+                    foreach (var item in Program.arrayV[i].Adjacente)
+                    {
+                        if (Program.arrayV[i].Id == item.Id)
+                        {
+                            // significa que possui um loop
+                            return false;
+                        }
+                        if (!verifyAdj(Program.arrayV[i], item)) return false;
+                    }
+                }
+            }
+            return true;
         }
 
         public bool isNulo()
@@ -57,6 +78,30 @@ namespace grafos
 
         public bool isCompleto()
         {
+            int []vert = getAllVertices();
+            for (int i = 0; i < vert.Length; i++)
+            {
+                for (int j = 0; j < Program.arrayV.Length; j++)
+                {
+                    if (Program.arrayV[i] != null)
+                    {
+                        if (vert[i].Equals(Program.arrayV[j].Id))
+                        {
+                            if (Program.arrayV[j].Adjacente != null)
+                            {
+                                foreach (var item in Program.arrayV[j].Adjacente)
+                                {
+
+                                }
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
             return true;
         }
 
@@ -98,12 +143,12 @@ namespace grafos
         }
 
         //para grafos dirigidos
-        public int getGrauEntrada()
+        public int getGrauEntrada(Vertice v1)
         {
             return 0;
         }
 
-        public int getGrauSaida()
+        public int getGrauSaida(Vertice v1)
         {
             return 0;
         }
@@ -111,6 +156,56 @@ namespace grafos
         public bool hasCiclo()
         {
             return true;
+        }
+
+        //metodos genericos e privados
+        private bool verifyAdj(Vertice vertice, Vertice item)
+        {
+            foreach (var it in item.Adjacente)
+            {
+                if (vertice.Id == it.Id) return false;
+            }
+            return true;
+        }
+
+        private int[] getAllVertices()
+        {
+            int[] vertices = null;
+            int[] verticesFinal = null;
+            List<int> verts = new List<int>();
+            int pos = 0;
+            for (int i = 0; i < Program.arrayV.Length; i++)
+            {
+                if (Program.arrayV[i] != null)
+                {
+                    vertices[pos] = Program.arrayV[i].Id;
+                    pos++;
+                    if(Program.arrayV[i].Adjacente != null)
+                    {
+                        foreach (var item in Program.arrayV[i].Adjacente)
+                        {
+                            vertices[pos] = item.Id;
+                            pos++;
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                if (!verts.Contains(vertices[i]))
+                {
+                    verts.Add(vertices[i]);
+                }
+            }
+
+            pos = 0;
+            foreach (var item in verts)
+            {
+                verticesFinal[pos] = item;
+                pos++;
+            }
+            return verticesFinal;
         }
     }
 }
