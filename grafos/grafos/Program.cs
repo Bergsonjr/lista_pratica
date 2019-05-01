@@ -101,7 +101,7 @@ namespace grafos
                 Console.Write("Digite o vértice: ");
                 int v1 = int.Parse(Console.ReadLine());
 
-                Console.WriteLine(dirigido.getGrau(findVertice(v1)));
+                Console.WriteLine(dirigido.getGrau(new Vertice(v1), arrayA));
             }
             catch (Exception e)
             {
@@ -119,7 +119,7 @@ namespace grafos
                 Console.Write("Digite o vértice: ");
                 int v1 = int.Parse(Console.ReadLine());
 
-                Console.WriteLine(dirigido.isIsolado(findVertice(v1)));
+                Console.WriteLine(dirigido.isIsolado(new Vertice(v1), arrayA));
             }
             catch (Exception e)
             {
