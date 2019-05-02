@@ -49,7 +49,7 @@ namespace grafos
             try
             {
                 readFileGrafo(pathNaoDirigido);
-                Console.WriteLine("Pressione ENTER para continuar");
+              /*Console.WriteLine("Pressione ENTER para continuar");
                 Console.ReadKey();
                 isAdjacente();
                 Console.WriteLine("Pressione ENTER para continuar");
@@ -67,6 +67,9 @@ namespace grafos
                 Console.WriteLine("Pressione ENTER para continuar");
                 Console.ReadKey();
                 isNulo();
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();*/
+                isCompleto();
                 Console.WriteLine("Pressione ENTER para continuar");
                 Console.ReadKey();
             }
@@ -93,7 +96,13 @@ namespace grafos
                 Console.Write("Digite o segundo vértice: ");
                 int v2 = int.Parse(Console.ReadLine());
 
-                Console.WriteLine(dirigido.isAdjacente(findVertice(v1), findVertice(v2)));
+                if((dirigido.isAdjacente(findVertice(v1), findVertice(v2)))){
+                    Console.WriteLine("Os vértices " + v1 + " e " + v2 + " são adjacentes.");
+                }
+                else
+                {
+                    Console.WriteLine("Os vértices " + v1 + " e " + v2 + " não são adjacentes.");
+                }
             }
             catch (Exception e)
             {
@@ -111,7 +120,7 @@ namespace grafos
                 Console.Write("Digite o vértice: ");
                 int v1 = int.Parse(Console.ReadLine());
 
-                Console.WriteLine(dirigido.getGrau(findVertice(v1)));
+                Console.WriteLine("O grau do vértice é " + dirigido.getGrau(findVertice(v1)));
             }
             catch (Exception e)
             {
@@ -129,7 +138,14 @@ namespace grafos
                 Console.Write("Digite o vértice: ");
                 int v1 = int.Parse(Console.ReadLine());
 
-                Console.WriteLine(dirigido.isIsolado(findVertice(v1)));
+                if (dirigido.isIsolado(findVertice(v1)))
+                {
+                    Console.WriteLine("Os vértice " + v1 + " é isolado.");
+                }
+                else
+                {
+                    Console.WriteLine("Os vértice " + v1 + " não é isolado.");
+                }
             }
             catch (Exception e)
             {
@@ -160,7 +176,15 @@ namespace grafos
             Console.WriteLine("*----- Grafo regular -----*");
             try
             {
-                Console.WriteLine(dirigido.isRegular());
+                if (dirigido.isRegular())
+                {
+                    Console.WriteLine("O grafo é regular. ");
+                }
+                else
+                {
+                    Console.WriteLine("O grafo não é regular. ");
+                }
+               
             }
             catch (Exception e)
             {
@@ -174,7 +198,14 @@ namespace grafos
             Console.WriteLine("*----- Grafo nulo -----*");
             try
             {
-                Console.WriteLine(dirigido.isNulo());
+                if (dirigido.isNulo())
+                {
+                    Console.WriteLine("O grafo é nulo. ");
+                }
+                else
+                {
+                    Console.WriteLine("O grafo não é nulo. ");
+                }
             }
             catch (Exception e)
             {
@@ -188,7 +219,14 @@ namespace grafos
             Console.WriteLine("*----- Grafo completo -----*");
             try
             {
-                Console.WriteLine(dirigido.isCompleto());
+                if (dirigido.isCompleto())
+                {
+                    Console.WriteLine("O grafo é completo.");
+                }
+                else
+                {
+                    Console.WriteLine("O grafo não é completo.");
+                }  
             }
             catch (Exception e)
             {
@@ -202,7 +240,14 @@ namespace grafos
             Console.WriteLine("*----- Grafo conexo -----*");
             try
             {
-                Console.WriteLine(dirigido.isConexo());
+                if (dirigido.isConexo())
+                {
+                    Console.WriteLine("O grafo é conexo");
+                }
+                else
+                {
+                    Console.WriteLine("O grafo não é conexo");
+                }
             }
             catch (Exception e)
             {
@@ -216,7 +261,14 @@ namespace grafos
             Console.WriteLine("*----- Grafo euleriano -----*");
             try
             {
-                Console.WriteLine(dirigido.isEuleriano());
+                if (dirigido.isEuleriano())
+                {
+                    Console.WriteLine("O grafo é euleriano.");
+                }
+                else
+                {
+                    Console.WriteLine("O grafo não é euleriano.");
+                }
             }
             catch (Exception e)
             {
@@ -230,7 +282,14 @@ namespace grafos
             Console.WriteLine("*----- Grafo unicursal -----*");
             try
             {
-                Console.WriteLine(dirigido.isUnicursal());
+                if (dirigido.isUnicursal())
+                {
+                    Console.WriteLine("O grafo é unicursal.");
+                }
+                else
+                {
+                    Console.WriteLine("O grafo não é unicursal.");
+                }
             }
             catch (Exception e)
             {
@@ -292,7 +351,7 @@ namespace grafos
             Console.WriteLine("*----- Cut vértices -----*");
             try
             {
-                Console.WriteLine(dirigido.getCutVertices());
+                Console.WriteLine("O número de cut-vértices é " + dirigido.getCutVertices());
             }
             catch (Exception e)
             {
@@ -309,7 +368,7 @@ namespace grafos
                 Console.WriteLine("Digite o vértice: ");
                 int v1 = int.Parse(Console.ReadLine());
 
-                Console.WriteLine(naoDirigido.getGrauEntrada(findVertice(v1)));
+                Console.WriteLine("O grau de entrada é " + naoDirigido.getGrauEntrada(findVertice(v1)));
             }
             catch (Exception e)
             {
@@ -326,7 +385,7 @@ namespace grafos
                 Console.WriteLine("Digite o vértice: ");
                 int v1 = int.Parse(Console.ReadLine());
 
-                Console.WriteLine(naoDirigido.getGrauSaida(findVertice(v1)));
+                Console.WriteLine("O grau de saída é " + naoDirigido.getGrauSaida(findVertice(v1)));
             }
             catch (Exception e)
             {
@@ -340,7 +399,14 @@ namespace grafos
             Console.WriteLine("*----- Possui ciclo -----*");
             try
             {
-                Console.WriteLine(naoDirigido.hasCiclo());
+                if (naoDirigido.hasCiclo())
+                {
+                    Console.WriteLine("O grafo possui ciclo.");
+                }
+                else
+                {
+                    Console.WriteLine("O grafo não possui ciclo.");
+                }
             }
             catch (Exception e)
             {
@@ -420,6 +486,23 @@ namespace grafos
                 }
             }
             return null;
+        }
+
+        public static List<Vertice> normalizeV()
+        {
+            List<Vertice> vTemp = new List<Vertice>();
+            List<Vertice> vFinal = new List<Vertice>();
+
+            for (int i = 0; i < arrayV.Length; i++)
+            {
+                foreach (var item in arrayV[i].Adjacente)
+                {
+                    vTemp.Add(item);
+                    //vTemp.
+                    //TODO
+                }
+            }
+            return vFinal;
         }
     }
 }

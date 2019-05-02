@@ -20,8 +20,7 @@ namespace grafos
         { 
             //verifica se é um vertice isolado, se não for percorre contabilizando sua adjacencia com outros vértices do grafo.
             int grau = 0;
-            if (v1.Adjacente.Count == 0)
-            {
+            
                 for (int i = 0; i < Program.arrayV.Length; i++)
                 {
                     if(Program.arrayV[i] != null && Program.arrayV[i].Adjacente != null) { 
@@ -31,12 +30,7 @@ namespace grafos
                         }
                     }
                 }
-                return grau;
-            }
-            else
-            {
-                return v1.Adjacente.Count;
-            }
+                return grau + v1.Adjacente.Count;
         }
 
         public bool isIsolado(Vertice v1)
@@ -82,28 +76,22 @@ namespace grafos
 
         public bool isCompleto()
         {
-            int []vert = getAllVertices();
-            for (int i = 0; i < vert.Length; i++)
-            {
-                for (int j = 0; j < Program.arrayV.Length; j++)
-                {
-                    if (Program.arrayV[i] != null)
-                    {
-                        if (vert[i].Equals(Program.arrayV[j].Id))
-                        {
-                            if (Program.arrayV[j].Adjacente != null)
-                            {
-                                foreach (var item in Program.arrayV[j].Adjacente)
-                                {
+            List<int> verts = getAllVertices();
+            int count = 0;
 
-                                }
-                            }
-                            else
-                            {
-                                return false;
-                            }
+            for (int i = 0; i < Program.arrayV.Length; i++)
+            {
+                if (Program.arrayV[i] != null && Program.arrayV[i].Adjacente != null)
+                {
+                    foreach (var itemVB in verts)
+                    {
+                        foreach (var item in Program.arrayV[i].Adjacente)
+                        {
+                            if (item.Id == itemVB) count++;
                         }
                     }
+                    if (count != verts.Count - 1) return false;
+                    count = 0;
                 }
             }
             return true;
@@ -172,42 +160,28 @@ namespace grafos
             return true;
         }
 
-        private int[] getAllVertices()
+        private List<int> getAllVertices()
         {
-            int[] vertices = null;
-            int[] verticesFinal = null;
+            List<int> verticesFinal = new List<int>();
             List<int> verts = new List<int>();
-            int pos = 0;
+
             for (int i = 0; i < Program.arrayV.Length; i++)
             {
                 if (Program.arrayV[i] != null)
                 {
-                    vertices[pos] = Program.arrayV[i].Id;
-                    pos++;
+                    verts.Add(Program.arrayV[i].Id);
                     if(Program.arrayV[i].Adjacente != null)
                     {
                         foreach (var item in Program.arrayV[i].Adjacente)
                         {
-                            vertices[pos] = item.Id;
-                            pos++;
+                            verts.Add(item.Id);
                         }
                     }
                 }
             }
-
-            for (int i = 0; i < vertices.Length; i++)
-            {
-                if (!verts.Contains(vertices[i]))
-                {
-                    verts.Add(vertices[i]);
-                }
-            }
-
-            pos = 0;
             foreach (var item in verts)
             {
-                verticesFinal[pos] = item;
-                pos++;
+                if (!verticesFinal.Contains(item)) verticesFinal.Add(item);
             }
             return verticesFinal;
         }
