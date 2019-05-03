@@ -49,27 +49,36 @@ namespace grafos
             try
             {
                 readFileGrafo(pathNaoDirigido);
-              /*Console.WriteLine("Pressione ENTER para continuar");
-                Console.ReadKey();
-                isAdjacente();
-                Console.WriteLine("Pressione ENTER para continuar");
-                Console.ReadKey();
-                getGrau();
-                Console.WriteLine("Pressione ENTER para continuar");
-                Console.ReadKey();
-                isIsolado();
-                Console.WriteLine("Pressione ENTER para continuar");
-                Console.ReadKey();
-                isPendente();
-                Console.WriteLine("Pressione ENTER para continuar");
-                Console.ReadKey();
-                isRegular();
-                Console.WriteLine("Pressione ENTER para continuar");
-                Console.ReadKey();
-                isNulo();
+                /*Console.WriteLine("Pressione ENTER para continuar");
+                  Console.ReadKey();
+                  isAdjacente();
+                  Console.WriteLine("Pressione ENTER para continuar");
+                  Console.ReadKey();
+                  getGrau();
+                  Console.WriteLine("Pressione ENTER para continuar");
+                  Console.ReadKey();
+                  isIsolado();
+                  Console.WriteLine("Pressione ENTER para continuar");
+                  Console.ReadKey();
+                  isPendente();
+                  Console.WriteLine("Pressione ENTER para continuar");
+                  Console.ReadKey();
+                  isRegular();
+                  Console.WriteLine("Pressione ENTER para continuar");
+                  Console.ReadKey();
+                  isNulo();
+                  Console.WriteLine("Pressione ENTER para continuar");
+                  Console.ReadKey();*/
+                /*isCompleto();
                 Console.WriteLine("Pressione ENTER para continuar");
                 Console.ReadKey();*/
-                isCompleto();
+                /*isConexo();
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();*/
+                /*isEuleriano();
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();*/
+                isUnicursal();
                 Console.WriteLine("Pressione ENTER para continuar");
                 Console.ReadKey();
             }
@@ -437,14 +446,45 @@ namespace grafos
                         arrayV[count] = new Vertice(int.Parse(separador[0]));
                         arrayV[count].Adjacente.Add(new Vertice(int.Parse(separador[1])));
                         count++;
+                        pos = verifyArray(new Vertice(int.Parse(separador[1])));
+                        if (pos == -1)
+                        {
+                            arrayV[count] = new Vertice(int.Parse(separador[1]));
+                            arrayV[count].Adjacente.Add(new Vertice(int.Parse(separador[0])));
+                            count++;
+                        }
+                        else
+                        {
+                            arrayV[pos].Adjacente.Add(new Vertice(int.Parse(separador[0])));
+                        }
                     }
                     else
                     { 
                         arrayV[pos].Adjacente.Add(new Vertice(int.Parse(separador[1])));
+                        pos = verifyArray(new Vertice(int.Parse(separador[1])));
+                        if(pos == -1)
+                        {
+                            arrayV[count] = new Vertice(int.Parse(separador[1]));
+                            arrayV[count].Adjacente.Add(new Vertice(int.Parse(separador[0])));
+                            count++;
+                        }
+                        else
+                        {
+                            arrayV[pos].Adjacente.Add(new Vertice(int.Parse(separador[0])));
+                        }
                     } 
                 }
                 linha = arq.ReadLine();
             }
+            /*for (int i = 0; i < arrayV.Length; i++)
+            {
+                Console.WriteLine(arrayV[i].Id + " vertice array \n");
+                foreach (var item in arrayV[i].Adjacente)
+                {
+                    Console.WriteLine(item.Id + " adjacente");
+                }
+            }
+            Console.ReadKey();*/
         }
 
         public static void inputDataOfArray()

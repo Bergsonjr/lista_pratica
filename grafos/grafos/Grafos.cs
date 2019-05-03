@@ -8,6 +8,9 @@ namespace grafos
 {
     class Grafos
     {
+        int timestamp;
+        public int Timestamp{get{return timestamp;}set{timestamp = value;}}
+
         public Grafos() {}
 
         public bool isAdjacente(Vertice v1, Vertice v2)
@@ -99,12 +102,66 @@ namespace grafos
 
         public bool isConexo()
         {
-            return false;
+            /*
+             *Para	cada	vértice	u	faça	
+                u.cor	=	branco;	
+                u.pai	=	null;	
+                Fim	para	
+                timestamp	=	0	
+                Para	cada	vértice	u	faça	
+                se	u.cor	==	branco	
+	 	        Visitar(u);	
+                Fim	se	
+                Fim	Para	
+
+                timestamp	=	timestamp	+	1;	
+                u.descoberta	=	timestamp;	
+                u.cor	=	cinza;	
+                Para	cada	vértice	v	vizinho	de	u	faça	
+                se	v.cor	==	branco	
+	 	        v.pai	=	u;	
+	 	        Visitar(v);	
+                Fim	se	
+                Fim	Para	
+                u.cor	=	preto;	
+                timestamp	=	timestamp+1;	
+                u.término	=	timestamp;	
+              */
+            for (int i = 0; i < Program.arrayV.Length; i++)
+            {
+                Program.arrayV[i].Cor = 0;
+                Program.arrayV[i].Pai = null;
+                //if (getGrau(Program.arrayV[i]) == 0) return false;
+            }
+            Timestamp = 0;
+            for (int i = 0; i < Program.arrayV.Length; i++)
+            {
+                if (getGrau(Program.arrayV[i]) == 0) return false;
+                if (Program.arrayV[i].Cor == 0) visitarVertice(Program.arrayV[i]);
+            }
+
+            for (int i = 0; i < Program.arrayV.Length; i++)
+            {
+                if (Program.arrayV[i].Cor == 0) return false;
+                else return true;
+            }
+            return true;
         }
 
         public bool isEuleriano()
         {
-            return true;
+            if(isConexo())
+            {
+                for (int i = 0; i < Program.arrayV.Length; i++)
+                {
+                    if (getGrau(Program.arrayV[i]) % 2 != 0) return false;
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public bool isUnicursal()
@@ -159,7 +216,23 @@ namespace grafos
             }
             return true;
         }
-
+        public void visitarVertice(Vertice u)
+        {
+            Timestamp++;
+            u.Descoberta = timestamp;
+            u.Cor = 1;
+            foreach (var v in u.Adjacente)
+            {
+                if (v.Cor == 0)
+                {
+                    v.Pai = u;
+                    visitarVertice(v);
+                }
+            }
+            u.Cor = 2;
+            Timestamp++;
+            u.Termino = Timestamp;
+        }
         private List<int> getAllVertices()
         {
             List<int> verticesFinal = new List<int>();
