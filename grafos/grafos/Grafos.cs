@@ -257,7 +257,18 @@ namespace grafos
               caso esta soma seja melhor que a estimativa anterior para o vértice j, substitua-a e anote k como precedente de j.
              */
 
+            Arvore arv = new Arvore();
+            arv.Vertices.Add(Program.arrayV[0]);//iniciando pelo primeiro vértice
+            int peso = int.MaxValue;
+            var atual = Program.arrayV[0];
 
+            foreach (var aresta in Program.arrayA)
+            {
+                if (atual.Id == aresta.Origem.Id) // se o vertice atual for igual ao da aresta percorrida
+                {
+
+                }
+            }
             return null;
         }
 
