@@ -10,7 +10,7 @@ namespace grafos
 {
     class Program
     {
-        static List<Aresta> arrayA = new List<Aresta>();
+        public static List<Aresta> arrayA = new List<Aresta>();
         public static Vertice[] arrayV;
         static Grafos dirigido = new Grafos();
         static Grafos naoDirigido = new Grafos();
@@ -90,7 +90,16 @@ namespace grafos
 
         public static void callMethodNotDirigido()
         {
-            //readFileDigrafo(pathDirigido);
+            readFileDigrafo(pathDirigido);
+            getGrauEntrada();
+            Console.WriteLine("Pressione ENTER para continuar");
+            Console.ReadKey();
+            getGrauSaida();
+            Console.WriteLine("Pressione ENTER para continuar");
+            Console.ReadKey();
+            hasCiclo();
+            Console.WriteLine("Pressione ENTER para continuar");
+            Console.ReadKey();
         }
 
         //1 - A
@@ -435,17 +444,42 @@ namespace grafos
                 separador = linha.Split(';');
                 if (!read)
                 {
-                   arrayV = new Vertice[int.Parse(separador[0])];
-                   read = true;
+                    arrayV = new Vertice[int.Parse(separador[0])];
+                    read = true;
                 }
                 else
                 {
                     int pos = verifyArray(new Vertice(int.Parse(separador[0])));
-                    if (pos == -1) 
+                    if (pos == -1)
                     {
+                        //se nao existir o vertice
                         arrayV[count] = new Vertice(int.Parse(separador[0]));
                         arrayV[count].Adjacente.Add(new Vertice(int.Parse(separador[1])));
+                        Aresta a = new Aresta(new Vertice(int.Parse(separador[0])), new Vertice(int.Parse(separador[1])), int.Parse(separador[2]));
+                        arrayA.Add(a);
                         count++;
+                        pos = verifyArray(new Vertice(int.Parse(separador[1])));
+                        if (pos == -1)
+                        {
+                            arrayV[count] = new Vertice(int.Parse(separador[1]));
+                            arrayV[count].Adjacente.Add(new Vertice(int.Parse(separador[0])));
+                            //a = new Aresta(new Vertice(int.Parse(separador[1])), new Vertice(int.Parse(separador[0])), int.Parse(separador[2]));
+                            //arrayA.Add(a);
+                            count++;
+                        }
+                        else
+                        {
+                            arrayV[pos].Adjacente.Add(new Vertice(int.Parse(separador[0])));
+                            a = new Aresta(new Vertice(int.Parse(separador[0])), new Vertice(int.Parse(separador[1])), int.Parse(separador[2]));
+                            arrayA.Add(a);
+                        }
+                    }
+                    else
+                    {
+                        //se o vertice ja existir no array
+                        arrayV[pos].Adjacente.Add(new Vertice(int.Parse(separador[1])));
+                        Aresta a = new Aresta(new Vertice(int.Parse(separador[0])), new Vertice(int.Parse(separador[1])), int.Parse(separador[2]));
+                        arrayA.Add(a);
                         pos = verifyArray(new Vertice(int.Parse(separador[1])));
                         if (pos == -1)
                         {
@@ -458,11 +492,48 @@ namespace grafos
                             arrayV[pos].Adjacente.Add(new Vertice(int.Parse(separador[0])));
                         }
                     }
+                }
+                linha = arq.ReadLine();
+            }
+        }
+
+            public static void readFileDigrafo(string path)
+            {
+                StreamReader arq = new StreamReader(path);
+                int count = 0;
+                string linha = "";
+                string[] separador;
+                linha = arq.ReadLine();
+                bool read = false;
+            while (linha != null)
+            {
+                separador = linha.Split(';');
+                if (!read)
+                {
+                    arrayV = new Vertice[int.Parse(separador[0])];
+                    read = true;
+                }
+                else
+                {
+                    int pos = 0;
+                    if (int.Parse(separador[3]) > 0)
+                    {
+                        pos = verifyArray(new Vertice(int.Parse(separador[0])));
+                        if (pos == -1)
+                        {
+                            arrayV[count] = new Vertice(int.Parse(separador[0]));
+                            arrayV[count].Adjacente.Add(new Vertice(int.Parse(separador[1])));
+                            count++;
+                        }
+                        else
+                        {
+                            arrayV[pos].Adjacente.Add(new Vertice(int.Parse(separador[1])));
+                        }
+                    }
                     else
-                    { 
-                        arrayV[pos].Adjacente.Add(new Vertice(int.Parse(separador[1])));
+                    {
                         pos = verifyArray(new Vertice(int.Parse(separador[1])));
-                        if(pos == -1)
+                        if (pos == -1)
                         {
                             arrayV[count] = new Vertice(int.Parse(separador[1]));
                             arrayV[count].Adjacente.Add(new Vertice(int.Parse(separador[0])));
@@ -472,20 +543,20 @@ namespace grafos
                         {
                             arrayV[pos].Adjacente.Add(new Vertice(int.Parse(separador[0])));
                         }
-                    } 
+                    }
                 }
                 linha = arq.ReadLine();
             }
-            /*for (int i = 0; i < arrayV.Length; i++)
-            {
-                Console.WriteLine(arrayV[i].Id + " vertice array \n");
-                foreach (var item in arrayV[i].Adjacente)
+                /*for (int i = 0; i < arrayV.Length; i++)
                 {
-                    Console.WriteLine(item.Id + " adjacente");
+                    Console.WriteLine(arrayV[i].Id + " vertice array \n");
+                    foreach (var item in arrayV[i].Adjacente)
+                    {
+                        Console.WriteLine(item.Id + " adjacente");
+                    }
                 }
+                Console.ReadKey();*/
             }
-            Console.ReadKey();*/
-        }
 
         public static void inputDataOfArray()
         {

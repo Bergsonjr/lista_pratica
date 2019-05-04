@@ -9,9 +9,13 @@ namespace grafos
     class Grafos
     {
         int timestamp;
-        public int Timestamp{get{return timestamp;}set{timestamp = value;}}
+        bool conexo;
+        public int Timestamp{ get { return timestamp; } set { timestamp = value;}}
+        public bool Conexo { get { return conexo; } set { conexo = value;}}
 
-        public Grafos() {}
+        public Grafos() {
+            this.buildArestas();
+        }
 
         public bool isAdjacente(Vertice v1, Vertice v2)
         {
@@ -71,7 +75,7 @@ namespace grafos
         public bool isNulo()
         {
             for (int i = 0; i < Program.arrayV.Length; i++)
-            {
+            {   //se os vértices não possuirem adjacentes o grafo é nulo
                 if(Program.arrayV[i] != null && Program.arrayV[i].Adjacente != null) if (Program.arrayV[i].Adjacente.Count > 0) return false;
             }
             return true;
@@ -136,21 +140,21 @@ namespace grafos
             Timestamp = 0;
             for (int i = 0; i < Program.arrayV.Length; i++)
             {
-                if (getGrau(Program.arrayV[i]) == 0) return false;
+                if (getGrau(Program.arrayV[i]) == 0) return this.Conexo = false;
                 if (Program.arrayV[i].Cor == 0) visitarVertice(Program.arrayV[i]);
             }
 
             for (int i = 0; i < Program.arrayV.Length; i++)
             {
-                if (Program.arrayV[i].Cor == 0) return false;
-                else return true;
+                if (Program.arrayV[i].Cor == 0) return this.Conexo = false;
+                else return this.Conexo = true;
             }
-            return true;
+            return this.Conexo = true;
         }
 
         public bool isEuleriano()
         {
-            if(isConexo())
+            if(this.Conexo)
             {
                 for (int i = 0; i < Program.arrayV.Length; i++)
                 {
@@ -166,7 +170,30 @@ namespace grafos
 
         public bool isUnicursal()
         {
-            return false;
+            /*foreach (var item in Program.arrayA)
+            {
+                item.imprimeArestas(item);
+            }*/
+            int k = 0;
+            if (this.Conexo)
+            {
+                for (int i = 0; i < Program.arrayV.Length; i++)
+                {
+                    if (getGrau(Program.arrayV[i]) % 2 != 0) k++;
+                }
+                if (2*k > 0) 
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public Grafos getComplementar()
@@ -216,6 +243,7 @@ namespace grafos
             }
             return true;
         }
+
         public void visitarVertice(Vertice u)
         {
             Timestamp++;
@@ -233,6 +261,9 @@ namespace grafos
             Timestamp++;
             u.Termino = Timestamp;
         }
+
+        private void buildArestas(){}
+
         private List<int> getAllVertices()
         {
             List<int> verticesFinal = new List<int>();
