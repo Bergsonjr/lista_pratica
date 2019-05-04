@@ -260,12 +260,20 @@ namespace grafos
         //para grafos dirigidos
         public int getGrauEntrada(Vertice v1)
         {
-            return 0;
+            return v1.Adjacente.Count;
         }
 
         public int getGrauSaida(Vertice v1)
         {
-            return 0;
+            int sai = 0;
+            for (int i = 0; i < Program.arrayV.Length; i++)
+            {
+                foreach (var item in Program.arrayV[i].Adjacente)
+                {
+                    if (item.Id == v1.Id) sai++;
+                }
+            }
+            return sai;
         }
 
         public bool hasCiclo()

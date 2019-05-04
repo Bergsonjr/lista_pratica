@@ -16,7 +16,7 @@ namespace grafos
         static Grafos naoDirigido = new Grafos();
         //files
         const string pathNaoDirigido = "grafo_nao_dirigido.txt";
-        const string pathDirigido = "grafo dirigido.txt";
+        const string pathDirigido = "grafo_dirigido.txt";
 
         static void Main(string[] args)
         {
