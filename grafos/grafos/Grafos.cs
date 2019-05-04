@@ -107,7 +107,7 @@ namespace grafos
         public bool isConexo()
         {
             /*
-             *Para	cada	vértice	u	faça	
+                Para	cada	vértice	u	faça	
                 u.cor	=	branco;	
                 u.pai	=	null;	
                 Fim	para	
@@ -131,6 +131,7 @@ namespace grafos
                 timestamp	=	timestamp+1;	
                 u.término	=	timestamp;	
               */
+
             for (int i = 0; i < Program.arrayV.Length; i++)
             {
                 Program.arrayV[i].Cor = 0;
@@ -260,24 +261,59 @@ namespace grafos
         //para grafos dirigidos
         public int getGrauEntrada(Vertice v1)
         {
-            return v1.Adjacente.Count;
-        }
-
-        public int getGrauSaida(Vertice v1)
-        {
-            int sai = 0;
+            int entra = 0;
             for (int i = 0; i < Program.arrayV.Length; i++)
             {
                 foreach (var item in Program.arrayV[i].Adjacente)
                 {
-                    if (item.Id == v1.Id) sai++;
+                    if (item.Id == v1.Id) entra++;
                 }
             }
-            return sai;
+            return entra;
+        }
+
+        public int getGrauSaida(Vertice v1)
+        {
+            return v1.Adjacente.Count; 
         }
 
         public bool hasCiclo()
         {
+            /*
+            busca em profundidade
+            Algoritmo profundidade recursiva(n)
+            Inicio
+            Visitar_nó(n)
+            Marcar_nó(n)
+            Para cada nó m marcado não visitado adjacente a n faça
+            Se(nómarcado(m) = “F” ) então
+            profundidade recursiva(m)
+            Fim se
+            Fim para
+            Fim
+            */
+            // 0 = branco
+            // 1 = cinza
+            // 2 = preto
+            for (int i = 0; i < Program.arrayV.Length; i++)
+            {
+                Program.arrayV[i].Cor = 0;
+                Program.arrayV[i].Pai = null;
+            }
+            this.Timestamp = 0;
+            for (int i = 0; i < Program.arrayV.Length; i++)
+            {
+                if (Program.arrayV[i].Cor == 0)
+                {
+                    visitarVertice(Program.arrayV[i]);
+                }
+            }
+            for (int i = 0; i < Program.arrayV.Length; i++)
+            {
+                if (Program.arrayV[i].Cor == 1) return true; //possui aresta de retorno
+                else if (Program.arrayV[i].Cor == 0) return false;
+                //Console.WriteLine(Program.arrayV[i].Cor);
+            }
             return true;
         }
 
@@ -295,7 +331,7 @@ namespace grafos
         {
             Timestamp++;
             u.Descoberta = timestamp;
-            u.Cor = 1;
+            u.Cor = 1; //cinza
             foreach (var v in u.Adjacente)
             {
                 if (v.Cor == 0)
