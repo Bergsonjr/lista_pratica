@@ -244,6 +244,20 @@ namespace grafos
         public Grafos getAGMPrim(Vertice v1)
         {
             //deve retornar, para um grafo conexo, sua arvore geradora minima(Algoritmo de Prim)
+            /* 
+              Seja G(V,A) um grafo orientado e s um vértice de G:
+
+              Atribua valor zero à estimativa do custo mínimo do vértice s (a raiz da busca) e infinito às demais estimativas;
+              Atribua um valor qualquer aos precedentes (o precedente de um vértice t é o vértice que precede t no caminho de custo mínimo de s para t);
+              Enquanto houver vértice aberto:
+              seja k um vértice ainda aberto cuja estimativa seja a menor dentre todos os vértices abertos;
+              feche o vértice k
+              Para todo vértice j ainda aberto que seja sucessor de k faça:
+              some a estimativa do vértice k com o custo do arco que une k a j;
+              caso esta soma seja melhor que a estimativa anterior para o vértice j, substitua-a e anote k como precedente de j.
+             */
+
+
             return null;
         }
 
