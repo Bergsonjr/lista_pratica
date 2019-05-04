@@ -37,7 +37,7 @@ namespace grafos
                         }
                     }
                 }
-                return grau + v1.Adjacente.Count;
+                return grau;
         }
 
         public bool isIsolado(Vertice v1)
@@ -198,7 +198,46 @@ namespace grafos
 
         public Grafos getComplementar()
         {
-            return null;
+            List<int> verts = getAllVertices();
+            List<int> adjcnt = new List<int>();
+            //List<int> execpt = new List<int>();
+            if (this.isCompleto())
+            { 
+                return null;
+            }
+            else
+            {
+                for (int i = 0; i < Program.arrayV.Length; i++)
+                {
+                    foreach (var item in Program.arrayV[i].Adjacente)
+                    {
+                        adjcnt.Add(item.Id);
+                    }
+
+                    var execpt = verts.Except(adjcnt).ToList();
+                    if (execpt.Contains(Program.arrayV[i].Id))
+                    {
+                        if (execpt.Count > 1)
+                        {
+                            foreach (var item in execpt)
+                            {
+                                if (item.Equals(Program.arrayV[i].Id)) { }
+                                else
+                                {
+                                    Console.WriteLine("O vértice " + Program.arrayV[i].Id + " não conectar com o vértice " + item);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                    adjcnt = null;
+                }
+            }
+            Console.ReadKey();
+            return new Grafos();
         }
 
         public Grafos getAGMPrim(Vertice v1)

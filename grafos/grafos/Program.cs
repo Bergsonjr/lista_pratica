@@ -49,36 +49,39 @@ namespace grafos
             try
             {
                 readFileGrafo(pathNaoDirigido);
-                /*Console.WriteLine("Pressione ENTER para continuar");
-                  Console.ReadKey();
-                  isAdjacente();
-                  Console.WriteLine("Pressione ENTER para continuar");
-                  Console.ReadKey();
-                  getGrau();
-                  Console.WriteLine("Pressione ENTER para continuar");
-                  Console.ReadKey();
-                  isIsolado();
-                  Console.WriteLine("Pressione ENTER para continuar");
-                  Console.ReadKey();
-                  isPendente();
-                  Console.WriteLine("Pressione ENTER para continuar");
-                  Console.ReadKey();
-                  isRegular();
-                  Console.WriteLine("Pressione ENTER para continuar");
-                  Console.ReadKey();
-                  isNulo();
-                  Console.WriteLine("Pressione ENTER para continuar");
-                  Console.ReadKey();*/
-                /*isCompleto();
                 Console.WriteLine("Pressione ENTER para continuar");
-                Console.ReadKey();*/
-                /*isConexo();
+                Console.ReadKey();
+                isAdjacente();
                 Console.WriteLine("Pressione ENTER para continuar");
-                Console.ReadKey();*/
-                /*isEuleriano();
+                Console.ReadKey();
+                getGrau();
                 Console.WriteLine("Pressione ENTER para continuar");
-                Console.ReadKey();*/
+                Console.ReadKey();
+                isIsolado();
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();
+                isPendente();
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();
+                isRegular();
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();
+                isNulo();
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();
+                isCompleto();
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();
+                isConexo();
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();
+                isEuleriano();
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();
                 isUnicursal();
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();
+                getComplementar();
                 Console.WriteLine("Pressione ENTER para continuar");
                 Console.ReadKey();
             }
@@ -180,7 +183,14 @@ namespace grafos
                 Console.Write("Digite o vértice: ");
                 int v1 = int.Parse(Console.ReadLine());
 
-                Console.WriteLine(dirigido.isPendente(findVertice(v1)));
+                if (dirigido.isPendente(findVertice(v1)))
+                {
+                    Console.WriteLine("O vértice " + v1 + " é pendente");
+                }
+                else
+                {
+                    Console.WriteLine("O vértice " + v1 + " não é pendente");
+                }
             }
             catch (Exception e)
             {
@@ -260,11 +270,11 @@ namespace grafos
             {
                 if (dirigido.isConexo())
                 {
-                    Console.WriteLine("O grafo é conexo");
+                    Console.WriteLine("O grafo é conexo. ");
                 }
                 else
                 {
-                    Console.WriteLine("O grafo não é conexo");
+                    Console.WriteLine("O grafo não é conexo. ");
                 }
             }
             catch (Exception e)
@@ -321,7 +331,14 @@ namespace grafos
             Console.WriteLine("*----- Grafo complementar -----*");
             try
             {
-                Console.WriteLine(dirigido.getComplementar());
+                if (dirigido.getComplementar() == null)
+                {
+                    Console.WriteLine("Não existe complementar para este grafo.");
+                }
+                else
+                {
+                    Console.WriteLine(dirigido.getComplementar());
+                }
             }
             catch (Exception e)
             {
