@@ -9,12 +9,20 @@ namespace grafos
     class Grafos
     {
         int timestamp;
+        bool passed;
         bool conexo;
+        int count;
+        Arvore arv;
         public int Timestamp{ get { return timestamp; } set { timestamp = value;}}
         public bool Conexo { get { return conexo; } set { conexo = value;}}
+        public bool Passed { get => passed; set => passed = value; }
+        public Arvore Arv { get => arv; set => arv = value; }
+        public int Count { get => count; set => count = value; }
 
         public Grafos() {
             this.buildArestas();
+            this.passed = false;
+             this.Arv = new Arvore();
         }
 
         public bool isAdjacente(Vertice v1, Vertice v2)
@@ -256,10 +264,22 @@ namespace grafos
               some a estimativa do vértice k com o custo do arco que une k a j;
               caso esta soma seja melhor que a estimativa anterior para o vértice j, substitua-a e anote k como precedente de j.
              */
-            if (true)//this.Conexo
+
+            if (!Passed) {
+                for (int i = 0; i < Program.arrayV.Length; i++)
+                {
+                    Program.arrayV[i].Cor = 0;
+                }
+                foreach (var item in Program.arrayA)
+                {
+                    item.Origem.Cor = 0;
+                    item.Destino.Cor = 0;
+                }
+            }
+            if (this.Conexo && v1.Cor == 0 && v1 != null)
             {
-                Arvore arv = new Arvore();
-                arv.Vertices.Add(v1);//iniciando pelo vertice parametrizado
+                Passed = true;
+                Arv.Vertices.Add(v1); // iniciando pelo vertice parametrizado
                 int peso = int.MaxValue;
                 var atual = v1;
                 Vertice proximo = null;
@@ -273,6 +293,17 @@ namespace grafos
                             peso = aresta.Peso;
                             proximo = aresta.Destino;
                         }
+                        if (aresta.Peso == peso)
+                        {
+                            if (proximo != null)
+                            {
+                                if (proximo.Id < aresta.Origem.Id)  // escolhe o vértice de menor indice
+                                {
+                                    peso = aresta.Peso;
+                                    proximo = aresta.Destino;
+                                }
+                            }
+                        }
                     }
                     else if (atual.Id == aresta.Destino.Id && aresta.Origem.Cor == 0 && aresta.Destino.Cor == 0)
                     {
@@ -280,6 +311,17 @@ namespace grafos
                         {
                             peso = aresta.Peso;
                             proximo = aresta.Origem;
+                        }
+                        if (aresta.Peso == peso)
+                        {
+                            if (proximo != null)
+                            {
+                                if (proximo.Id < aresta.Destino.Id) // escolhe o vértice de menor indice
+                                {
+                                    peso = aresta.Peso;
+                                    proximo = aresta.Origem;
+                                }
+                            }
                         }
                     }
                 }
@@ -294,16 +336,27 @@ namespace grafos
                     {
                         item.Destino.Cor = 2;
                         //proximo.Cor = 2;
+                        break;
                     }
                     else if (item.Origem.Id == v1.Id && item.Peso == peso) 
                     {
                         item.Origem.Cor = 2;
                         //proximo.Cor = 2;
+                        break;
                     }
                 }
                 v1.Cor = 2;//preto -> ja foi visitado
-                Console.WriteLine(v1.Id);
-                this.getAGMPrim(proximo);
+                
+                if (proximo != null)
+                {
+                    Console.WriteLine(v1.Id + " -> folha");
+                    this.Count++;
+                    if (proximo.Cor != 2 && Count < Program.arrayV.Length)
+                    {
+                        Console.WriteLine("| -> galho");
+                    }
+                    this.getAGMPrim(proximo);
+                }
                 //TODO
                 //resolver de forma que quando percorrer todos os vértices, pare de executar a chamada para o metodo.
             }

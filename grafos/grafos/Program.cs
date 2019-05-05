@@ -71,11 +71,11 @@ namespace grafos
                 Console.ReadKey();
                 isCompleto();
                 Console.WriteLine("Pressione ENTER para continuar");
-                Console.ReadKey();
+                Console.ReadKey();*/
                 isConexo();
                 Console.WriteLine("Pressione ENTER para continuar");
                 Console.ReadKey();
-                isEuleriano();
+                /*isEuleriano();
                 Console.WriteLine("Pressione ENTER para continuar");
                 Console.ReadKey();
                 isUnicursal();
@@ -364,7 +364,7 @@ namespace grafos
                 Console.WriteLine("Digite o vértice inicial: ");
                 int v1 = int.Parse(Console.ReadLine());
 
-                if(dirigido.getAGMPrim(findVertice(v1)) == null)
+                if(dirigido.getAGMPrim(findVertice(v1)) == null && !dirigido.Conexo)
                 {
                     Console.WriteLine("O grafo não é conexo, portanto não é possível retornar uma árvore geradora mínima");
                 }
