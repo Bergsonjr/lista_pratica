@@ -49,7 +49,7 @@ namespace grafos
             try
             {
                 readFileGrafo(pathNaoDirigido);
-                Console.WriteLine("Pressione ENTER para continuar");
+               /* Console.WriteLine("Pressione ENTER para continuar");
                 Console.ReadKey();
                 isAdjacente();
                 Console.WriteLine("Pressione ENTER para continuar");
@@ -83,7 +83,16 @@ namespace grafos
                 Console.ReadKey();
                 getComplementar();
                 Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();*/
+                getAGMPrim();
+                Console.WriteLine("Pressione ENTER para continuar");
                 Console.ReadKey();
+               /* getAGMKruskal();
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();
+                getCutVertices();
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();*/
             }
             catch (Exception e)
             {
@@ -102,7 +111,7 @@ namespace grafos
             Console.ReadKey();
             hasCiclo();
             Console.WriteLine("Pressione ENTER para continuar");
-            Console.ReadKey();
+            Console.ReadKey();  
         }
 
         //1 - A
@@ -355,7 +364,10 @@ namespace grafos
                 Console.WriteLine("Digite o vértice inicial: ");
                 int v1 = int.Parse(Console.ReadLine());
 
-                Console.WriteLine(dirigido.getAGMPrim(findVertice(v1)));
+                if(dirigido.getAGMPrim(findVertice(v1)) == null)
+                {
+                    Console.WriteLine("O grafo não é conexo, portanto não é possível retornar uma árvore geradora mínima");
+                }
             }
             catch (Exception e)
             {
@@ -372,7 +384,10 @@ namespace grafos
                 Console.WriteLine("Digite o vértice inicial: ");
                 int v1 = int.Parse(Console.ReadLine());
 
-                Console.WriteLine(dirigido.getAGMKruskal(findVertice(v1)));
+                if (dirigido.getAGMKruskal(findVertice(v1)) == null)
+                {
+                    Console.WriteLine("O grafo não é conexo, portanto não possível retornar uma árvore geradora mínima");
+                }
             }
             catch (Exception e)
             {

@@ -256,20 +256,62 @@ namespace grafos
               some a estimativa do vértice k com o custo do arco que une k a j;
               caso esta soma seja melhor que a estimativa anterior para o vértice j, substitua-a e anote k como precedente de j.
              */
-
-            Arvore arv = new Arvore();
-            arv.Vertices.Add(Program.arrayV[0]);//iniciando pelo primeiro vértice
-            int peso = int.MaxValue;
-            var atual = Program.arrayV[0];
-
-            foreach (var aresta in Program.arrayA)
+            if (true)//this.Conexo
             {
-                if (atual.Id == aresta.Origem.Id) // se o vertice atual for igual ao da aresta percorrida
-                {
+                Arvore arv = new Arvore();
+                arv.Vertices.Add(v1);//iniciando pelo vertice parametrizado
+                int peso = int.MaxValue;
+                var atual = v1;
+                Vertice proximo = null;
 
+                foreach (var aresta in Program.arrayA)
+                {
+                    if (atual.Id == aresta.Origem.Id && aresta.Origem.Cor == 0 && aresta.Destino.Cor == 0) // se o vertice atual for igual ao da aresta percorrida
+                    {
+                        if (aresta.Peso < peso)
+                        {
+                            peso = aresta.Peso;
+                            proximo = aresta.Destino;
+                        }
+                    }
+                    else if (atual.Id == aresta.Destino.Id && aresta.Origem.Cor == 0 && aresta.Destino.Cor == 0)
+                    {
+                        if (aresta.Peso < peso)
+                        {
+                            peso = aresta.Peso;
+                            proximo = aresta.Origem;
+                        }
+                    }
                 }
+
+                foreach (var item in Program.arrayA)
+                {
+                    /*
+                      procura o elemento que foi selecionado para ser o atual
+                      e atualiza para marca lo como visitado na classe de Arestas
+                    */
+                    if (item.Destino.Id == v1.Id && item.Peso == peso)
+                    {
+                        item.Destino.Cor = 2;
+                        //proximo.Cor = 2;
+                    }
+                    else if (item.Origem.Id == v1.Id && item.Peso == peso) 
+                    {
+                        item.Origem.Cor = 2;
+                        //proximo.Cor = 2;
+                    }
+                }
+                v1.Cor = 2;//preto -> ja foi visitado
+                Console.WriteLine(v1.Id);
+                this.getAGMPrim(proximo);
+                //TODO
+                //resolver de forma que quando percorrer todos os vértices, pare de executar a chamada para o metodo.
             }
-            return null;
+            else
+            {
+                return null;
+            }
+            return new Grafos();
         }
 
         public Grafos getAGMKruskal(Vertice v1)
