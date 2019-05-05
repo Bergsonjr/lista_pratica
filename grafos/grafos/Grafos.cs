@@ -8,21 +8,29 @@ namespace grafos
 {
     class Grafos
     {
+        Vertice[] removed;
         int timestamp;
         bool passed;
         bool conexo;
         int count;
+        int count2;
+        int qtd;
         Arvore arv;
         public int Timestamp{ get { return timestamp; } set { timestamp = value;}}
         public bool Conexo { get { return conexo; } set { conexo = value;}}
         public bool Passed { get => passed; set => passed = value; }
         public Arvore Arv { get => arv; set => arv = value; }
         public int Count { get => count; set => count = value; }
+        public int Count2 { get => count2; set => count2 = value; }
+        public int Qtd { get => qtd; set => qtd = value; }
+        internal Vertice[] Removed { get => removed; set => removed = value; }
 
         public Grafos() {
             this.buildArestas();
             this.passed = false;
-             this.Arv = new Arvore();
+            this.Arv = new Arvore();
+            this.qtd = 0;
+            this.Count2 = 0;
         }
 
         public bool isAdjacente(Vertice v1, Vertice v2)
@@ -153,9 +161,9 @@ namespace grafos
                 if (Program.arrayV[i].Cor == 0) visitarVertice(Program.arrayV[i]);
             }
 
-            for (int i = 0; i < Program.arrayV.Length; i++)
+            for (int j = 0; j < Program.arrayV.Length; j++)
             {
-                if (Program.arrayV[i].Cor == 0) return this.Conexo = false;
+                if (Program.arrayV[j].Cor == 0) return this.Conexo = false;
                 else return this.Conexo = true;
             }
             return this.Conexo = true;
@@ -375,9 +383,92 @@ namespace grafos
 
         public int getCutVertices()
         {
-            return 0;
+            /*
+            * remover por completo um vertice do grafo e verificar se o grafo continuar conexo
+            * se o grafo se desconectar qtd++ -> que representa a quantidade de cutVertices do grafo
+            * fazer este passo para todos os vertice do grafo e ir incrementando esta variavel caso satisfaça a condição estabelecida.
+            */
+
+            Timestamp = 0;
+            Count2++;
+            resetColor(this.Removed);
+            while (this.Removed.Length > Count2)
+            {
+                //removed.Sort();
+                Vertice deleted = this.Removed[0];
+                this.Removed[0] = null;
+                foreach (var item in this.Removed)
+                {
+                    if(item != null) item.Adjacente.Remove(deleted); //removendo da lista de adjacencia de todos
+                }
+
+                foreach (var item in this.Removed)
+                {
+                    if (item != null)
+                    {
+                        if (item.Cor == 0)
+                        {
+                            visit(item);
+                        }
+                    }
+                }
+
+                foreach (var item in this.Removed)
+                {
+                    if (item != null)
+                    {
+                        if (item.Cor == 0) Qtd++;
+                    }
+                }
+                organizeArray(this.Removed);
+                this.Removed[this.Removed.Length - 1] = deleted;
+                this.getCutVertices();
+            }
+            return Qtd;
+        }
+    
+        public void organizeArray(Vertice[] array)
+        {
+            Vertice aux, prox;
+            for (int i = 0; i < array.Length; i++)
+            {
+                if(array[i] == null && i < (array.Length - 1))
+                {
+                    prox = array[i + 1];
+                    array[i] = prox;
+                }
+            }
         }
 
+        public void visit(Vertice u)
+        {
+            Timestamp++;
+            u.Descoberta = timestamp;
+            u.Cor = 1; //cinza
+            foreach (var v in u.Adjacente)
+            {
+                if (v.Cor == 0)
+                {
+                    v.Pai = u;
+                    visit(v);
+                }
+            }
+            u.Cor = 2;
+            Timestamp++;
+            u.Termino = Timestamp;
+        }
+
+        private void resetColor(Vertice[] v)
+        {
+            for (int i = 0; i < v.Length; i++)
+            {
+                v[i].Cor = 0;
+                foreach (var item in v[i].Adjacente)
+                {
+                    item.Cor = 0;
+                }
+            }
+        }
         //para grafos dirigidos
         public int getGrauEntrada(Vertice v1)
         {
@@ -466,6 +557,15 @@ namespace grafos
         }
 
         private void buildArestas(){}
+
+        public void convertArray(Vertice[] array)
+        {
+            this.Removed = new Vertice[array.Length];
+            for (int i = 0; i < array.Length; i++)
+            {
+                Removed[i] = array[i];
+            }
+        }
 
         private List<int> getAllVertices()
         {

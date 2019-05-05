@@ -12,8 +12,9 @@ namespace grafos
     {
         public static List<Aresta> arrayA = new List<Aresta>();
         public static Vertice[] arrayV;
-        static Grafos dirigido = new Grafos();
-        static Grafos naoDirigido = new Grafos();
+        public static Grafos dirigido = new Grafos();
+        public static Grafos naoDirigido = new Grafos();
+        
         //files
         const string pathNaoDirigido = "grafo_nao_dirigido.txt";
         const string pathDirigido = "grafo_dirigido.txt";
@@ -49,7 +50,7 @@ namespace grafos
             try
             {
                 readFileGrafo(pathNaoDirigido);
-               /* Console.WriteLine("Pressione ENTER para continuar");
+                /*Console.WriteLine("Pressione ENTER para continuar");
                 Console.ReadKey();
                 isAdjacente();
                 Console.WriteLine("Pressione ENTER para continuar");
@@ -83,16 +84,16 @@ namespace grafos
                 Console.ReadKey();
                 getComplementar();
                 Console.WriteLine("Pressione ENTER para continuar");
-                Console.ReadKey();*/
+                Console.ReadKey();
                 getAGMPrim();
                 Console.WriteLine("Pressione ENTER para continuar");
                 Console.ReadKey();
-               /* getAGMKruskal();
-                Console.WriteLine("Pressione ENTER para continuar");
-                Console.ReadKey();
-                getCutVertices();
+                getAGMKruskal();
                 Console.WriteLine("Pressione ENTER para continuar");
                 Console.ReadKey();*/
+                getCutVertices();
+                Console.WriteLine("Pressione ENTER para continuar");
+                Console.ReadKey();
             }
             catch (Exception e)
             {
@@ -401,6 +402,7 @@ namespace grafos
             Console.WriteLine("*----- Cut vértices -----*");
             try
             {
+                dirigido.convertArray(arrayV);
                 Console.WriteLine("O número de cut-vértices é " + dirigido.getCutVertices());
             }
             catch (Exception e)
