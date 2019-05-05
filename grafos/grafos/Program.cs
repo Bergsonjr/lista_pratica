@@ -50,7 +50,7 @@ namespace grafos
             try
             {
                 readFileGrafo(pathNaoDirigido);
-                /*Console.WriteLine("Pressione ENTER para continuar");
+                Console.WriteLine("Pressione ENTER para continuar");
                 Console.ReadKey();
                 isAdjacente();
                 Console.WriteLine("Pressione ENTER para continuar");
@@ -72,11 +72,11 @@ namespace grafos
                 Console.ReadKey();
                 isCompleto();
                 Console.WriteLine("Pressione ENTER para continuar");
-                Console.ReadKey();*/
+                Console.ReadKey();
                 isConexo();
                 Console.WriteLine("Pressione ENTER para continuar");
                 Console.ReadKey();
-                /*isEuleriano();
+                isEuleriano();
                 Console.WriteLine("Pressione ENTER para continuar");
                 Console.ReadKey();
                 isUnicursal();
@@ -90,9 +90,9 @@ namespace grafos
                 Console.ReadKey();
                 getAGMKruskal();
                 Console.WriteLine("Pressione ENTER para continuar");
-                Console.ReadKey();*/
+                Console.ReadKey();
                 getCutVertices();
-                Console.WriteLine("Pressione ENTER para continuar");
+                Console.WriteLine("Pressione ENTER para finalizar");
                 Console.ReadKey();
             }
             catch (Exception e)
@@ -111,7 +111,7 @@ namespace grafos
             Console.WriteLine("Pressione ENTER para continuar");
             Console.ReadKey();
             hasCiclo();
-            Console.WriteLine("Pressione ENTER para continuar");
+            Console.WriteLine("Pressione ENTER para finalizar");
             Console.ReadKey();  
         }
 
@@ -385,10 +385,7 @@ namespace grafos
                 Console.WriteLine("Digite o vértice inicial: ");
                 int v1 = int.Parse(Console.ReadLine());
 
-                if (dirigido.getAGMKruskal(findVertice(v1)) == null)
-                {
-                    Console.WriteLine("O grafo não é conexo, portanto não possível retornar uma árvore geradora mínima");
-                }
+                dirigido.getAGMKruskal(findVertice(v1));
             }
             catch (Exception e)
             {
@@ -403,7 +400,14 @@ namespace grafos
             try
             {
                 dirigido.convertArray(arrayV);
-                Console.WriteLine("O número de cut-vértices é " + dirigido.getCutVertices());
+                if (!dirigido.Conexo)
+                {
+                    Console.WriteLine("O grafo é desconexo.");
+                }
+                else
+                {
+                    Console.WriteLine("O número de cut-vértices é " + dirigido.getCutVertices());
+                }
             }
             catch (Exception e)
             {

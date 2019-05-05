@@ -11,6 +11,7 @@ namespace grafos
         Vertice[] removed;
         int timestamp;
         bool passed;
+        bool passed2;
         bool conexo;
         int count;
         int count2;
@@ -24,6 +25,7 @@ namespace grafos
         public int Count2 { get => count2; set => count2 = value; }
         public int Qtd { get => qtd; set => qtd = value; }
         internal Vertice[] Removed { get => removed; set => removed = value; }
+        public bool Passed2 { get => passed2; set => passed2 = value; }
 
         public Grafos() {
             this.buildArestas();
@@ -70,6 +72,7 @@ namespace grafos
 
         public bool isRegular()
         {
+            //verifica se o vertice possui loops ou arestas paralelas
             for (int i = 0; i < Program.arrayV.Length; i++)
             {
                 if(Program.arrayV[i] != null && Program.arrayV[i].Adjacente != null)
@@ -99,6 +102,7 @@ namespace grafos
 
         public bool isCompleto()
         {
+            //verifica se o todos os componentes do grafo se comunicam
             List<int> verts = getAllVertices();
             int count = 0;
 
@@ -161,7 +165,9 @@ namespace grafos
                 if (Program.arrayV[i].Cor == 0) visitarVertice(Program.arrayV[i]);
             }
 
+#           pragma warning disable CS0162 // Unreachable code detected
             for (int j = 0; j < Program.arrayV.Length; j++)
+#           pragma warning restore CS0162 // Unreachable code detected
             {
                 if (Program.arrayV[j].Cor == 0) return this.Conexo = false;
                 else return this.Conexo = true;
@@ -215,6 +221,7 @@ namespace grafos
 
         public Grafos getComplementar()
         {
+            //para um vertice nao completo, verifica quais sao as arestas complementares do mesmo
             List<int> verts = getAllVertices();
             List<int> adjcnt = new List<int>();
             //List<int> execpt = new List<int>();
@@ -377,8 +384,105 @@ namespace grafos
 
         public Grafos getAGMKruskal(Vertice v1)
         {
-            //deve retornar, para um grafo conexo, sua arvore geradora minima(Algoritmo de Kruskal)
-            return null;
+            if (!Passed2)
+            {
+                for (int i = 0; i < Program.arrayV.Length; i++)
+                {
+                    Program.arrayV[i].Cor = 0;
+                }
+                foreach (var item in Program.arrayA)
+                {
+                    item.Origem.Cor = 0;
+                    item.Destino.Cor = 0;
+                }
+                //Program.arrayA.Sort();
+            }
+            if (v1.Cor == 0 && v1 != null)
+            {
+                Passed2 = true;
+                Arv.Vertices.Add(v1); // iniciando pelo vertice parametrizado
+                int peso = int.MaxValue;
+                var atual = v1;
+                Vertice proximo = null;
+
+                foreach (var aresta in Program.arrayA)
+                {
+                    if (atual.Id == aresta.Origem.Id && aresta.Origem.Cor == 0 && aresta.Destino.Cor == 0) // se o vertice atual for igual ao da aresta percorrida
+                    {
+                        if (aresta.Peso < peso)
+                        {
+                            peso = aresta.Peso;
+                            proximo = aresta.Destino;
+                        }
+                        if (aresta.Peso == peso)
+                        {
+                            if (proximo != null)
+                            {
+                                if (proximo.Id < aresta.Origem.Id) 
+                                {
+                                    peso = aresta.Peso;  // escolhe a aresta de menor peso
+                                    proximo = aresta.Destino;
+                                }
+                            }
+                        }
+                    }
+                    else if (atual.Id == aresta.Destino.Id && aresta.Origem.Cor == 0 && aresta.Destino.Cor == 0)
+                    {
+                        if (aresta.Peso < peso)
+                        {
+                            peso = aresta.Peso;
+                            proximo = aresta.Origem;
+                        }
+                        if (aresta.Peso == peso)
+                        {
+                            if (proximo != null)
+                            {
+                                if (proximo.Id < aresta.Destino.Id)  // escolhe a aresta de menor peso
+                                {
+                                    peso = aresta.Peso;
+                                    proximo = aresta.Origem;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                foreach (var item in Program.arrayA)
+                {
+                    /*
+                      procura o elemento que foi selecionado para ser o atual
+                      e atualiza para marca lo como visitado na classe de Arestas
+                    */
+                    if (item.Destino.Id == v1.Id && item.Peso == peso)
+                    {
+                        item.Destino.Cor = 2;
+                        break;
+                    }
+                    else if (item.Origem.Id == v1.Id && item.Peso == peso)
+                    {
+                        item.Origem.Cor = 2;
+                        break;
+                    }
+                }
+                v1.Cor = 2;//preto -> ja foi visitado
+
+                if (proximo != null)
+                {
+                    Console.WriteLine(v1.Id + " -> folha");
+                    
+                    if (proximo.Cor != 2 && Count2 < Program.arrayV.Length + 1)
+                    {
+                        Console.WriteLine("| -> aresta -> peso " + peso);
+                    }
+                    this.Count2++;
+                    this.getAGMPrim(proximo);
+                }
+            }
+            else
+            {
+                return null;
+            }
+            return new Grafos();
         }
 
         public int getCutVertices()
@@ -427,9 +531,10 @@ namespace grafos
             return Qtd;
         }
     
+        //organiza espaços em branco do array
         public void organizeArray(Vertice[] array)
         {
-            Vertice aux, prox;
+            Vertice prox;
             for (int i = 0; i < array.Length; i++)
             {
                 if(array[i] == null && i < (array.Length - 1))
@@ -440,6 +545,7 @@ namespace grafos
             }
         }
 
+        //visita um vertice u
         public void visit(Vertice u)
         {
             Timestamp++;
@@ -458,6 +564,7 @@ namespace grafos
             u.Termino = Timestamp;
         }
 
+        //reseta a cor dos vertice e seus adjacentes
         private void resetColor(Vertice[] v)
         {
             for (int i = 0; i < v.Length; i++)
@@ -469,7 +576,9 @@ namespace grafos
                 }
             }
         }
+
         //para grafos dirigidos
+        //retorna o grau de entrada do vertice de acordo com suas incidencias
         public int getGrauEntrada(Vertice v1)
         {
             int entra = 0;
@@ -483,6 +592,7 @@ namespace grafos
             return entra;
         }
 
+        //retorna o grau de saida de um vertice de acordo com suas adjacencias
         public int getGrauSaida(Vertice v1)
         {
             return v1.Adjacente.Count; 
